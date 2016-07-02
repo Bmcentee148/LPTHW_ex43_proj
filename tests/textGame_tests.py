@@ -1,10 +1,8 @@
-# Simple skeleton file for running tests on our project
+# Tests for components of the testGame module
 
 from nose.tools import *
 from textGame.textGame import *
-# from textGame.textGame import Scene
-# from textGame.textGame import Death
-# from textGame.textGame import Scene_Map
+from textGame.scenes import *
 
 def test_scene_base() :
     # We are not able to directly create an object of type Scene
@@ -21,7 +19,7 @@ def test_scene_map() :
     scene_map = Scene_Map('armory')
     assert_equal(scene_map.start_scene, 'armory')
     assert_equal(Scene_Map(None).start_scene, None)
-    assert_not_equal(scene_map.start_scene, 'corridor')
+    assert_not_equal(scene_map.start_scene, 'central_corridor')
     assert_equal(scene_map.get_scene('vacant'), None)
     assert_equal(Scene_Map(None).get_opening_scene(), None)
 
@@ -29,7 +27,11 @@ def test_scene_map() :
     assert_equal(scene_map.get_scene('death'), Death())
 
 def test_gameEngine() :
-    pass
+    scene_map = Scene_Map('bridge')
+    game = GameEngine(scene_map)
+    assert_equal(game.scene_map, scene_map)
+    assert_not_equal(game.scene_map, Scene_Map('armory'))
+    assert_equal(game.scene_map, Scene_Map('bridge'))
 
 
 

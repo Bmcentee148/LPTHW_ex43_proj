@@ -7,79 +7,11 @@ Classes:
 """
 
 #-- Import Statements --#
+import scenes
 from random import randint
 import sys
 
 #-- Class Definitions --#
-class Scene(object) :
-    """A base class for each scene in the game."""
-
-    # Prevent creation of instance objects of type Scene
-    def __init__(self) :
-        raise NotImplementedError
-
-    # Abstract method that will be implemented in all subclasses
-    def enter(self) :
-        """Not implemented. Subclass and provide functionality.
-
-        Returns:
-            the name of the next scene in the players path 
-        """
-        pass
-
-    def __eq__(self, other) :
-        # Just check if type of Scene are the same.
-        return type(self) == type(other)
-
-
-class Death(Scene) :
-    """---TODO---"""
-    
-    def __init__(self) :
-        pass
-
-    def enter(self) :
-        pass
-
-
-class Central_Corridor(Scene) :
-    """---TODO---"""
-    
-    def __init__(self) :
-        pass
-
-    def enter(self) :
-        pass
-    
-
-class Armory(Scene) :
-    """---TODO---"""
-    
-    def __init__(self) :
-        pass
-
-    def enter(self) :
-        pass
-    
-
-class Escape_Pod(Scene) :
-    """---TODO---"""
-    
-    def __init__(self) :
-        pass
-
-    def enter(self) :
-        pass
-    
-
-class Bridge(Scene) :
-    """---TODO---"""
-    
-    def __init__(self) :
-        pass
-    
-    def enter(self) :
-        pass
 
 class Scene_Map(object) :
     """A map of the game's scene layout structure.
@@ -90,15 +22,19 @@ class Scene_Map(object) :
     """
 
     scenes = {
-        'death' : Death(),
-        'central_corridor' : Central_Corridor(),
-        'armory' : Armory(),
-        'escape_pod' : Escape_Pod(),
-        'bridge' : Bridge()
+        'death' : scenes.Death(),
+        'central_corridor' : scenes.Central_Corridor(),
+        'armory' : scenes.Armory(),
+        'escape_pod' : scenes.Escape_Pod(),
+        'bridge' : scenes.Bridge(),
+        'finished' : scenes.Finished()
     }
 
     def __init__(self, start_scene) :
         self.start_scene = start_scene
+
+    def __eq__(self, other) :
+        return self.start_scene == other.start_scene
 
     def get_scene(self, scene_name) :
         """Get the scene with the given name.
@@ -108,6 +44,7 @@ class Scene_Map(object) :
         Returns:
             a Scene object of given name if the name is in the map, else None 
         """
+
         return Scene_Map.scenes.get(scene_name, None)
 
     def get_opening_scene(self) :
@@ -116,26 +53,36 @@ class Scene_Map(object) :
         Returns:
             the beginning Scene object
         """
+
         return self.get_scene(self.start_scene)
 
 
 class GameEngine(object) :
+    """Engine for running the text adventure game.
 
+    Attributes:
+        scene_map - A map of the scene names to scenes in the game
+    """
 
     def __init__(self, scene_map) :
         self.scene_map = scene_map
 
     def play(self) :
-        curr_scene = self.scene_map.get_opening_scene()
+        """Run the text adventure game."""
 
-        while True :
+        curr_scene = self.scene_map.get_opening_scene()
+        last_scene = self.scene_map.get_scene('finished')
+
+        while curr_scene != last_scene :
             print('\n----------------------------')
             next_scene_name = curr_scene.enter()
             current_scene = self.scene_map.get_scene(next_scene_name)
 
-
-
-
+#-- Main Script --#
+if __name__ == '__main__' :
+    scene_map = Scene_Map('finished')
+    game = GameEngine(scene_map)
+    game.play()
 
 
 
