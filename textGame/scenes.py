@@ -18,10 +18,6 @@ from random import randint
 class Scene(object) :
     """A base class for each scene in the game."""
 
-    # Prevent creation of instance objects of type Scene
-    def __init__(self) :
-        raise NotImplementedError
-
     # Abstract method that will be implemented in all subclasses
     def enter(self) :
         """Not implemented. Subclass and provide functionality.
@@ -29,7 +25,7 @@ class Scene(object) :
         Returns:
             the name of the next scene in the players path 
         """
-        pass
+        raise NotImplementedError
 
     def __eq__(self, other) :
         # Just check if type of Scene are the same.
@@ -37,19 +33,19 @@ class Scene(object) :
 
 
 class Death(Scene) :
-    """---TODO---"""
     
-    def __init__(self) :
-        pass
+    quips = [
+        "You died. You kinda suck at this.",
+        "This isn't your day kid, you're dead.",
+        "I can not believe you managed to die like that.",
+        "You should just stop trying."
+    ]
 
     def enter(self) :
-        pass
+        return Death.quips[randint(0,len(Death.quips) - 1)]
 
 class Finished(Scene) :
     """---TODO---"""
-
-    def __init__(self) :
-        pass
 
     def enter(self) :
         pass
@@ -57,9 +53,6 @@ class Finished(Scene) :
 class Central_Corridor(Scene) :
     """---TODO---"""
     
-    def __init__(self) :
-        pass
-
     def enter(self) :
         pass
     
@@ -67,9 +60,6 @@ class Central_Corridor(Scene) :
 class Armory(Scene) :
     """---TODO---"""
     
-    def __init__(self) :
-        pass
-
     def enter(self) :
         pass
     
@@ -77,18 +67,12 @@ class Armory(Scene) :
 class Escape_Pod(Scene) :
     """---TODO---"""
     
-    def __init__(self) :
-        pass
-
     def enter(self) :
         pass
     
 
 class Bridge(Scene) :
     """---TODO---"""
-    
-    def __init__(self) :
-        pass
-    
+        
     def enter(self) :
         pass

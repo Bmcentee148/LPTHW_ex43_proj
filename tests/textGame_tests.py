@@ -6,12 +6,10 @@ from textGame.scenes import *
 
 def test_scene_base() :
     # We are not able to directly create an object of type Scene
-    assert_raises(NotImplementedError, Scene)
+    assert_raises(NotImplementedError, Scene().enter)
 
 def test_subclassing() :
     # Test we can create an object from subclass of Scene and call its methods
-    d = Death()
-    assert_equal(d.enter(), None)
     e = Escape_Pod()
     assert_equal(e.enter(), None)
 

@@ -1,7 +1,6 @@
 """This module holds the basic components of a text adventure game.
 
 Classes:
-    Scene - The base class for each scene in the game
     Scene_Map - A map that will hold determine which scene is displayed next
     GameEngine - A game engine that is responsible for processing a users game
 """
@@ -70,18 +69,20 @@ class GameEngine(object) :
     def play(self) :
         """Run the text adventure game."""
 
-        curr_scene = self.scene_map.get_opening_scene()
+        current_scene = self.scene_map.get_opening_scene()
         last_scene = self.scene_map.get_scene('finished')
 
-        while curr_scene != last_scene :
+        while current_scene != last_scene :
             print('\n----------------------------')
-            next_scene_name = curr_scene.enter()
+            next_scene_name = current_scene.enter()
             current_scene = self.scene_map.get_scene(next_scene_name)
+
+        # run the last scene
+        current_scene.enter()
 
 #-- Main Script --#
 if __name__ == '__main__' :
-    scene_map = Scene_Map('finished')
-    game = GameEngine(scene_map)
+    game = GameEngine(Scene_Map('finished'))
     game.play()
 
 
