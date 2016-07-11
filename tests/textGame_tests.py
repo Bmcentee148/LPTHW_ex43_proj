@@ -1,4 +1,4 @@
-# Tests for components of the testGame module
+"""Tests for the text adventure game."""
 
 from nose.tools import *
 from textGame.textGame import *
@@ -11,7 +11,6 @@ def test_scene_base() :
 def test_subclassing() :
     # Test we can create an object from subclass of Scene and call its methods
     e = Escape_Pod()
-    assert_equal(e.enter(), None)
 
 def test_scene_map() :
     scene_map = Scene_Map('armory')

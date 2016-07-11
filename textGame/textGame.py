@@ -82,7 +82,7 @@ class GameEngine(object) :
 
 #-- Main Script --#
 if __name__ == '__main__' :
-    game = GameEngine(Scene_Map('finished'))
+    game = GameEngine(Scene_Map('central_corridor'))
     game.play()
 
 
